@@ -1,11 +1,15 @@
-<input type="text" ng-keypress="index.showQuiz($event, filtered)" ng-model="searchTitle" placeholder="Title" />
-<div>
-  Order by:
-  <a href ng-click="index.setOrder('title')">Title</a>
-  <a href ng-click="index.setOrder('updated_at')">Date</a>
-</div>
+<input ng-keypress="index.enterLink($event, filtered)" 
+       ng-model="inputTitle" type="text" placeholder="Title" />
 <ul>
-  <li ng-repeat="quiz in filtered = (index.quizzes | filter:{title: searchTitle})">
+  <li>
+    Order by:
+    <a href ng-click="index.setOrder('title')" 
+            ng-class="{active:index.isOrderedBy('title'), reverse:index.reverse}">Title</a>
+    <a href ng-click="index.setOrder('updated_at')" 
+            ng-class="{active:index.isOrderedBy('updated_at'), reverse:index.reverse}">Date</a>
+  </li>
+  <li ng-repeat="quiz in filtered = (index.quizzes | filter:{title: inputTitle}
+                                     | orderBy:index.orderField:index.reverse)">
     <a ng-click="" href="#/quizzes/{{quiz.id}}">
       {{quiz.title}}
       <time datetime="{{quiz.updated_at}}">
@@ -15,4 +19,6 @@
     </a>
   </li>
 </ul>
-
+<div ng-class="{invisible:index.lastPage}">
+    <a href ng-click="index.moreQuizzes(index.page)">More</a>
+</div>

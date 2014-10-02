@@ -28,4 +28,6 @@ gem 'rspec-rails', group: [:development, :test]
 gem 'angularjs-rails', '~> 1.2.25'
 # Use your angular templates with rails' asset pipeline
 gem 'angular-rails-templates', '~> 0.1.3'
+# Pagination
+gem 'kaminari', '~> 0.16.1'
 

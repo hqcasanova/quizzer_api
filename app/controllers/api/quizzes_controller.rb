@@ -3,7 +3,7 @@ class Api::QuizzesController < ApplicationController
   respond_to :json
 
   def index
-    respond_with(:api, Quiz.select(:id, :title, :updated_at))
+    respond_with(:api, Quiz.order('updated_at DESC').page(params[:page]).select(:id, :title, :updated_at))
   end
 
   def show 
