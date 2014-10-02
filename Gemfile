@@ -24,4 +24,8 @@ gem 'pry', group: :development
 gem 'faker'
 # Use Rspec for testing instead of Test::Unit
 gem 'rspec-rails', group: [:development, :test]
+# Wrapper for Angular.js
+gem 'angularjs-rails', '~> 1.2.25'
+# Use your angular templates with rails' asset pipeline
+gem 'angular-rails-templates', '~> 0.1.3'
 

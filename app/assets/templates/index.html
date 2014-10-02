@@ -1,0 +1,18 @@
+<input type="text" ng-keypress="index.showQuiz($event, filtered)" ng-model="searchTitle" placeholder="Title" />
+<div>
+  Order by:
+  <a href ng-click="index.setOrder('title')">Title</a>
+  <a href ng-click="index.setOrder('updated_at')">Date</a>
+</div>
+<ul>
+  <li ng-repeat="quiz in filtered = (index.quizzes | filter:{title: searchTitle})">
+    <a ng-click="" href="#/quizzes/{{quiz.id}}">
+      {{quiz.title}}
+      <time datetime="{{quiz.updated_at}}">
+        <span>{{quiz.updated_at | date:'dd MMM'}}</span>
+        <span>{{quiz.updated_at | date:'yyyy'}}</span>
+      </time>
+    </a>
+  </li>
+</ul>
+
