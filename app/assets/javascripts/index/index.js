@@ -29,46 +29,43 @@
       });
   }
 
-  //TO BE BROKEN DOWN
+  //TO BE BROKEN DOWN: Seems that this will be just the controller for pagination
   function IndexCtrl($http, $location) { 
     var index = this;
     
     index.quizzes = [ ];
     index.reverse = false;
     index.orderField = '';
-    index.page = 1;
+    index.pageNum = 1;
     index.lastPage = false;
 
-    //TODO: ordered list controller/directive. Sets the sorting criteria for the quiz list. 
+    //TODO: ordered list controller-directive? Sets the sorting criteria for the quiz list. 
     index.setOrder = function(orderField) {
         index.reverse = !index.reverse;
         index.orderField = orderField;
     };
 
-    //TODO: ordered list controller/directive.
+    //TODO: ordered list controller-directive? Checks if a given field is being used for sorting
     index.isOrderedBy = function(orderField) {
         return orderField === index.orderField;
     };
 
-    //TODO: attribute directive.
+    //TODO: attribute directive? Visit the only link left if search has filtered out all but one.
     index.enterLink = function(keyEvent, filtered) {
         if ((keyEvent.which === 13) && (filtered.length === 1)) {
             $location.path('/quizzes/' + filtered[0].id);
         }
     };
 
+    //Updates the list of quizzes by appending the ones corresponding to the next page. It also flags when
+    //the last page has been retrieved.
     index.nextPage = function(page) {
-        if (page.length > 0) {
-            index.quizzes = index.quizzes.concat(page);
-            index.page += 1;
-        } else if (page.length === 0) {
-            index.lastPage = true;
-        } else {
-            alert('Problem encountered while appending next page.');
-        }
+        index.lastPage = page.pop();    //last item = comparison on the server between page number and number of pages
+        index.quizzes = index.quizzes.concat(page);
+        index.pageNum += 1;
     };
 
-    //Factory?: Grabs the paginated, JSON-formatted list of quizzes from the server.
+    //Inside a factory? Grabs the paginated, JSON-formatted list of quizzes from the server.
     index.moreQuizzes = function(pageNumber) {
         $http({
             url: '/api/quizzes', 
@@ -78,10 +75,12 @@
             index.nextPage(data);
             return data;
         }).error(function() {
+            alert('Problem encountered while fetching the JSON list of quizzes');
             return -1;
         });
     };  
 
-    index.moreQuizzes(index.page);
+    //Very first page
+    index.moreQuizzes(index.pageNum);
   }
 })();
