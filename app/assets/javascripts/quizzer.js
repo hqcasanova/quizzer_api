@@ -3,13 +3,14 @@
 
   /**
    * @name myApp
-   * @desc App level routes and dependencies.
+   * @desc App-level dependencies and routes. Dependency order dictates module-level routing precedence.
    */
   angular
     .module('quizzer', [
       'ngRoute',
       'quizzer.index',
-      'quizzer.new'
+      'quizzer.new',
+      'quizzer.show'
     ])
     .config(routes);
 

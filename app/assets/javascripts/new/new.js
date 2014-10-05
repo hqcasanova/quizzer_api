@@ -6,12 +6,12 @@
    * @desc Controller and routes for quiz creation
    */
   angular
-    .module('quizzer.new', [
-      'ngRoute',
-      'templates'
-    ])
-    .config(routes)
-    .controller('NewCtrl', NewCtrl);
+      .module('quizzer.new', [
+          'ngRoute',
+          'templates'
+      ])
+      .config(routes)
+      .controller('NewCtrl', NewCtrl);
 
   /**
    * @name routes
@@ -19,11 +19,11 @@
    * @param $routeProvider Angular service which provides interface to setup routes
    */    
   function routes($routeProvider) {
-    $routeProvider
-      .when('/quizzes/new', {
-        templateUrl: 'new.html',
-        controller: 'NewCtrl'
-      });
+      $routeProvider
+          .when('/quizzes/new', {
+              templateUrl: 'new.html',
+              controller: 'NewCtrl'
+          });
   }
 
   function NewCtrl() { }

@@ -1,0 +1,17 @@
+<div>
+  <h1>TITLE</h1>
+  <p>Quiz not yet open</p> 
+</div>
+<ul>
+  <li ng-repeat="question in quiz.items">
+    <fieldset>
+      <legend>{{question.title}}</legend>
+      <label ng-repeat="option in question.options">
+        <input name="{{option}}" type="radio">{{option}}
+      </label>
+    </fieldset>
+  </li>
+</ul>
+<div ng-class="{invisible:quiz.isEnd()}">
+    <a href ng-click="quiz.moreItems()">More</a>
+</div>
