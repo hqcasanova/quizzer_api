@@ -7,11 +7,11 @@
     <fieldset>
       <legend>{{question.title}}</legend>
       <label ng-repeat="option in question.options">
-        <input name="{{option}}" type="radio">{{option}}
+        <input name="{{option}}" type="radio" />{{option}}<br/>
       </label>
     </fieldset>
   </li>
 </ul>
 <div ng-class="{invisible:quiz.isEnd()}">
-    <a href ng-click="quiz.moreItems()">More</a>
+    <a href ng-click="quiz.moreItems()">Next question</a>
 </div>
