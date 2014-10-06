@@ -4,7 +4,7 @@ class Api::QuizzesController < ApplicationController
 
   def index
     page_no = params[:page]
-    quizzes = Quiz.order('updated_at DESC').page(page_no).select(:id, :title, :updated_at)
+    quizzes = Quiz.order(:id).page(page_no).select(:id, :title, :updated_at)
     quizzes.append(page_no.to_i == quizzes.num_pages)  #flag for the browser to stop retrieving pages
     respond_with(:api, quizzes)
   end

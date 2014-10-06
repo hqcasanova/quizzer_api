@@ -7,7 +7,7 @@ class Api::QuestionsController < ApplicationController
     all_questions = @quiz.questions.all
     if (params[:options] && params[:page])  #include options with every question and paginate (1 question + options / page)
       page_no = params[:page]
-      question = all_questions.order('title').page(page_no).per(1)
+      question = all_questions.order(:id).page(page_no).per(1)
       question_id = question.pluck(:id)[0]
       respond_with [{
         :title => question.pluck(:title)[0], 

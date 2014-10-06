@@ -27,25 +27,27 @@
           });
   };
 
-  ShowCtrl.$inject = ['$routeParams', 'IndexFactory'];
+  ShowCtrl.$inject = ['$routeParams', 'IndexFactory', 'CacheService'];
 
-  function ShowCtrl($routeParams, IndexFactory) { 
+  function ShowCtrl($routeParams, IndexFactory, CacheService) { 
       var quiz = this,
           index = new IndexFactory('/api/quizzes/' + $routeParams.quizId + '/questions', {options: true});
-      //api/quizzes/1/questions?options=true&page=5
-      quiz.items = [];
+      
       quiz.moreItems = moreItems;
-      quiz.isEnd = isEnd;
+      quiz.selected = CacheService.cache.selected;
      
       //Retrieve first page of quizzes
-      index.getPage(quiz);
+      moreItems();
 
-      function moreItems() {
-          index.getPage(quiz);
+      function update() {
+          quiz.isEnd = index.isLastPage;
+          quiz.items = index.items;        
       }
 
-      function isEnd() {
-          return index.isLastPage;
+      function moreItems() {
+          index
+              .getPage()
+              .then(update);
       }
       
   }

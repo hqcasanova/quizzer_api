@@ -1,5 +1,5 @@
 <div>
-  <h1>TITLE</h1>
+  <h1>{{quiz.selected}}</h1>
   <p>Quiz not yet open</p> 
 </div>
 <ul>
@@ -12,6 +12,6 @@
     </fieldset>
   </li>
 </ul>
-<div ng-class="{invisible:quiz.isEnd()}">
+<div ng-class="{invisible: quiz.isEnd}">
     <a href ng-click="quiz.moreItems()">Next question</a>
 </div>
