@@ -14,6 +14,9 @@
 //= require jquery_ujs
 //= require angular
 //= require angular-route
+//= require angular-cookies
+//= require firebase
+//= require angularfire
 //= require angular-rails-templates
 //= require_tree ../templates
 //= require_tree .

@@ -10,7 +10,7 @@
   </li>
   <li ng-repeat="quiz in filtered = (index.items | filter: {title: inputTitle}
                                      | orderBy:index.orderField:index.reverse)">
-    <a ng-click="index.selected = quiz.title" href="#/quizzes/{{quiz.id}}">
+    <a ng-click="index.selected = quiz.title" ng-href="{{index.quizUrl(quiz.id)}}">
       {{quiz.title}}
       <time datetime="{{quiz.updated_at}}">
         <span>{{quiz.updated_at | date:'dd MMM'}}</span>
@@ -19,6 +19,6 @@
     </a>
   </li>
 </ul>
-<div ng-class="{invisible: index.isEnd}">
+<div ng-hide="index.end">
     <a href ng-click="index.moreItems()">More</a>
 </div>

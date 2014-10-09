@@ -1,8 +1,8 @@
-<div>
-  <h1>{{quiz.selected}}</h1>
-  <p>Quiz not yet open</p> 
-</div>
+<h1>{{quiz.selected}}</h1>
 <ul>
+  <li>
+    <p ng-hide="quiz.isFull()">{{classroom.turnout}} students out of {{classroom.size}}</p>
+  </li> 
   <li ng-repeat="question in quiz.items">
     <fieldset>
       <legend>{{question.title}}</legend>
@@ -12,6 +12,7 @@
     </fieldset>
   </li>
 </ul>
-<div ng-class="{invisible: quiz.isEnd}">
-    <a href ng-click="quiz.moreItems()">Next question</a>
+<div ng-if="authenticated">
+    <a href ng-hide="quiz.isOpen()" ng-click="quiz.openQuestion()">{{quiz.statusText}}</a>
+    <a href ng-hide="quiz.end" ng-click="quiz.nextQuestion()">Next</a>
 </div>

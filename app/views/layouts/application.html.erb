@@ -12,8 +12,9 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <ul class="menu">
-    <li><a href="#/quizzes">Quiz List</a></li>
-    <li><a href="#/quizzes/new">New Quiz</a></li>
+    <li><a ng-if="authenticated" href="#/quizzes">List</a></li>
+    <li><a ng-if="authenticated" href="#/quizzes/new">New</a></li>
+    <li><a ng-if="checkedin" ng-click="quit()" href="#/checkin">Quit</a></li>
   </ul>
 
   <section ng-view></section>

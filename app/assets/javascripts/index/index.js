@@ -13,7 +13,7 @@
       .config(routes)
       .controller('IndexCtrl', IndexCtrl);
 
-  IndexCtrl.$inject = ['$location', '$scope', 'IndexFactory', 'CacheService'];
+  IndexCtrl.$inject = ['$location', '$scope', '$cookieStore', 'PagedIdxFactory', 'CacheService', 'ClassroomService'];
 
   /**
    * @name routes
@@ -30,9 +30,9 @@
   }
 
   //TO BE BROKEN DOWN: Seems that this will be just the controller for pagination
-  function IndexCtrl($location, $scope, IndexFactory, CacheService) { 
+  function IndexCtrl($location, $scope, $cookieStore, PagedIdxFactory, CacheService, ClassroomService) { 
       var list = this,
-          index = new IndexFactory('/api/quizzes');
+          paged = new PagedIdxFactory('/api/quizzes');
       
       list.reverse = false;
       list.orderField = '';
@@ -41,15 +41,17 @@
       list.setOrder = setOrder;
       list.isOrderedBy = isOrderedBy;
       list.enterLink = enterLink;
+      list.quizUrl = quizUrl;
      
       //Retrieve first page of quizzes (if not cached)
       if (CacheService.dirtyCache) {
-          CacheService.flushTo(index);
+          CacheService.flushTo(paged);
           update();
       } else moreItems();
 
       $scope.$on('$destroy', function () {
-          CacheService.saveFrom(index, list.selected);
+          $cookieStore.put('selectedQuiz', list.selected);
+          CacheService.saveFrom(paged);
       });
 
       //TODO: ordered list controller-directive? Sets the sorting criteria for the quiz list. 
@@ -64,14 +66,22 @@
       }
 
       function update() {
-          list.isEnd = index.isLastPage;
-          list.items = index.items;        
+          list.end = paged.lastPage;
+          list.items = paged.items;        
       }
 
       function moreItems() {
-          index
+          paged
               .getPage()
               .then(update);
+      }
+
+      function quizUrl(quizId) {
+          if (ClassroomService.isRightQuiz(quizId)) {
+              return '#/quizzes/' + quizId;
+          } else {
+              return '';
+          }
       }
 
       //TODO: attribute directive? Visit the only link left if search has filtered out all but one.

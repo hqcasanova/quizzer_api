@@ -1,0 +1,7 @@
+<form name="checkinForm" class="checkin" ng-submit="checkin.validate()">
+  I'm a <select ng-options="role.id as role.title for role in checkin.roles" 
+                ng-model="checkin.role"></select>
+  <input ng-model="checkin.email" type="email" name="email" placeholder="Email" required />
+  <input ng-model="checkin.password" type="password" placeholder="Password" ng-show="checkin.role"/>
+  <input type="submit" value="Check in" ng-disabled="checkinForm.$invalid" />
+</form>
