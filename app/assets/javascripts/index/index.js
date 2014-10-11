@@ -43,6 +43,11 @@
       list.enterLink = enterLink;
       list.quizUrl = quizUrl;
      
+      //Reset quiz-related counters if teacher
+      if ($scope.authenticated) {
+          ClassroomService.exitQuiz();
+      }
+
       //Retrieve first page of quizzes (if not cached)
       if (CacheService.dirtyCache) {
           CacheService.flushTo(paged);
@@ -77,7 +82,7 @@
       }
 
       function quizUrl(quizId) {
-          if (ClassroomService.isRightQuiz(quizId)) {
+          if (ClassroomService.isRightQuiz(quizId) || $scope.authenticated) {
               return '#/quizzes/' + quizId;
           } else {
               return '';

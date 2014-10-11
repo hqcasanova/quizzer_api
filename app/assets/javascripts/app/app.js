@@ -2,8 +2,8 @@
     'use strict';
 
     /**
-     * @name myApp
-     * @desc App-level dependencies and routes. Dependency order dictates module-level routing precedence.
+     * @name Quizzer
+     * @desc Naive MVP of real-time quiz single-page application.
      * Assumptions:
      *      One teacher signed in at a time. 
      *      No dual accounts (teacher <=> student)

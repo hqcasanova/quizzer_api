@@ -9,9 +9,15 @@ class Api::QuestionsController < ApplicationController
       page_no = params[:page]
       question = all_questions.order(:id).page(page_no).per(1)
       question_id = question.pluck(:id)[0]
+      #if (authenticated with session)    #Authentication will be session-based
+      #  option_id = question.pluck(:option_id)[0]
+      # else 
+      #   option_id = ''   #the field should be removed altogether for non-authenticated users.
+      # end
       respond_with [{
         :title => question.pluck(:title)[0], 
-        :options => all_questions.find(question_id).options.pluck(:title).sort
+        :answer => question.pluck(:option_id)[0],
+        :options => all_questions.find(question_id).options.pluck(:id, :title).sort
       }, (page_no.to_i == question.num_pages)]    #flag for the browser to stop retrieving pages
     else
       respond_with all_questions

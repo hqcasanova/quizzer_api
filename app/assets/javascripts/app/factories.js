@@ -13,40 +13,67 @@
         var ref = new Firebase("https://torid-fire-8167.firebaseio.com/"),
             rtCounter = function(objectName) {
                 var _this = this,
-                    classSynced;
-
-                this.name = objectName;    
-                classSynced = $firebase(ref.child(this.name));
+                    syncedObj = null,
+                    callbackOnChange = null;
                 
-                this.dataObj = classSynced.$asObject();
-                this.callbackOnChange = null;
-
+                this.name = objectName;
+                syncedObj = synced(_this.name).$asObject();
+                this.get = get;
+                this.set = set;
                 this.inc = inc;
                 this.dec = dec;
-                this.set = set;
+                this.bindTo = bindTo;
                 this.onChange = onChange;
                 this.offChange = offChange;
 
+                function get(property) {
+                    return syncedObj[property];
+                }
+
+                function set(property, value) {
+                    synced(_this.name).$set(property, value);
+                }
+
+                function synced(child) {
+                    return $firebase(ref.child(child));
+                } 
+
+                function bindTo(scope) {
+                    scope[_this.name] = syncedObj;
+                    syncedObj.$bindTo(scope, _this.name);
+                }
+
+                function transaction(property, updateFn) {
+                    return synced(_this.name + '/' + property).$transaction(updateFn, false)
+                        .then(function(snapshot) {
+                            if (!snapshot) {
+                                console.log('Error: the transaction involving property ' + property + ' was aborted');
+                            } 
+                        }, function(error) {
+                            console.log('Error encountered while setting up a transaction for ' + this.name + '/' + property);
+                        });
+                }
+
+                function inc(property) {
+                    transaction(property, function (currentValue) {
+                        return (currentValue || 0) + 1;
+                    }, false);
+                } 
+
+                function dec(property) {
+                    transaction(property, function (currentValue) {
+                        return (currentValue || 0) - 1;
+                    }, false);
+                }
+
                 function onChange(property, callback) {
-                    _this.callbackOnChange = ref.child(this.name + '/' + property).on('value', callback, function (errorObject) {
-                        console.log('Error encountered while listening to a value change for ' + this.name + '/' + property);
+                    callbackOnChange = ref.child(_this.name + '/' + property).on('value', callback, function (errorObject) {
+                        console.log('Error encountered while listening to a value change for ' + _this.name + '/' + property);
                     });
                 }
 
                 function offChange(property) {
-                    ref.child(this.name + '/' + property).off('value', _this.callbackOnChange);
-                }
-
-                function set(property, value) {
-                    classSynced.$set(property, value);
-                } 
-
-                function inc(property) {
-                    set(property, _this.dataObj[property] + 1);
-                } 
-
-                function dec(property) {
-                    set(property, _this.dataObj[property] - 1);
+                    ref.child(_this.name + '/' + property).off('value', callbackOnChange);
                 }
             };
 
@@ -82,7 +109,7 @@
                 }).success(function(data) {
                     addPage(data);
                 }).error(function() {
-                    alert('Problem encountered while fetching the JSON list of quizzes');
+                    console.log('Problem encountered while fetching the JSON list of quizzes');
                 });
             }
         };

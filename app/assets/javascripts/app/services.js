@@ -10,7 +10,6 @@
 
     function ClassroomService($cookieStore, RTCountersFactory) {
         this.counters = new RTCountersFactory('classroom');
-        this.bindTo = bindTo;
         this.inc = studentInc;
         this.dec = studentDec;
         this.setQuiz = setQuiz;
@@ -18,12 +17,6 @@
         this.isRightQuiz = isRightQuiz;
         this.isEmptyQuiz = isEmptyQuiz;
         this.seeQuestion = seeQuestion;
-
-        function bindTo(scope, varName) {
-            varName = varName || 'classroom';
-            scope[varName] = this.counters.dataObj;
-            this.counters.dataObj.$bindTo(scope, varName);
-        }
 
         function studentInc(property) {
             if (!$cookieStore.get('authenticated')) {
@@ -49,15 +42,15 @@
         }
 
         function isRightQuiz(quizId) {
-            return quizId === this.counters.dataObj['quizId'];
+            return quizId === this.counters.get('quizId');
         }
 
         function isEmptyQuiz() {
-            return this.counters.dataObj['turnout'] === 0;
+            return this.counters.get('turnout') === 0;
         }
 
         function seeQuestion(readers) {
-            return readers === this.counters.dataObj['size'];
+            return readers === this.counters.get('size');
         }
     }
 

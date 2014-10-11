@@ -1,4 +1,4 @@
-<form name="checkinForm" class="checkin" ng-submit="checkin.validate()">
+<form name="checkinForm" class="checkin" ng-submit="checkin.validate()" novalidate>
   I'm a <select ng-options="role.id as role.title for role in checkin.roles" 
                 ng-model="checkin.role"></select>
   <input ng-model="checkin.email" type="email" name="email" placeholder="Email" required />

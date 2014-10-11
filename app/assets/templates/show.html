@@ -1,18 +1,26 @@
 <h1>{{quiz.selected}}</h1>
 <ul>
-  <li>
-    <p ng-hide="quiz.isFull()">{{classroom.turnout}} students out of {{classroom.size}}</p>
-  </li> 
   <li ng-repeat="question in quiz.items">
-    <fieldset>
-      <legend>{{question.title}}</legend>
-      <label ng-repeat="option in question.options">
-        <input name="{{option}}" type="radio" />{{option}}<br/>
-      </label>
-    </fieldset>
+    <form name="questionForm" ng-submit="quiz.submitAnswer(question, quiz.answer)" novalidate>
+      <fieldset>
+        <legend>{{question.title}}</legend>
+        <label ng-repeat="option in question.options">
+          <input  ng-model="quiz.answer" type="radio" name="options" value="{{option[0]}}"
+                  ng-checked="quiz.isAnswer(question, option[0])" 
+                  ng-disabled="authenticated" required />{{option[1]}}<br/>
+        </label>
+      </fieldset>
+      <input ng-hide="authenticated || submitted" 
+             ng-click="submitted = true" 
+             ng-disabled="questionForm.$invalid"
+             type="submit"
+             value="Submit" />
+    </form>
   </li>
 </ul>
-<div ng-if="authenticated">
+<p ng-hide="quiz.isFull()">{{classroom.turnout}} students out of {{classroom.size}}</p>
+<div ng-show="authenticated && quiz.isFull()">
     <a href ng-hide="quiz.isOpen()" ng-click="quiz.openQuestion()">{{quiz.statusText}}</a>
     <a href ng-hide="quiz.end" ng-click="quiz.nextQuestion()">Next</a>
+    <p ng-show="quiz.statusText === 'Opened'">{{answer.right}} right answers and {{answer.wrong}} wrong answers</p>
 </div>
