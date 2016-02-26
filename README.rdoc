@@ -1,8 +1,8 @@
-== Quizzer Base Application
+== Quizzer
 
-This application will serve as the base JSON API for trying out various JS frameworks. This repository should be forked and used as a starting point. Do not clone and commit to this repo! 
+Final MVP for Bitmaker's course consisting of a real-time classroom quiz application based on Angular.js (v1.2.25), Ruby on Rails and Firebase. 
 
-Stories:
+The inital list of features is as follows:
 
 * Should be a one-page application
 
@@ -24,3 +24,4 @@ Stories:
 
 * After a question is closed, an immediate visualization of the result should be shown
 
+My focus was on adherence to Angular best practices. For instance, services are used to model data instead of direct manipulation of $scope, and factories amount to interfaces for interaction with Firebase or RoR.
