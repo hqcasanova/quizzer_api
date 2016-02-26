@@ -1,6 +1,6 @@
 == Quizzer
 
-Final MVP for Bitmaker's course consisting of a real-time classroom quiz application based on Angular.js (v1.2.25), Ruby on Rails and Firebase. 
+Final MVP for Bitmaker's course consisting of a real-time classroom quiz application based on Angular.js (v1.2.25), Ruby on Rails and Firebase. It can be tested [here](https://rt-quizzer.herokuapp.com).
 
 The inital list of features is as follows:
 
@@ -24,4 +24,4 @@ The inital list of features is as follows:
 
 * After a question is closed, an immediate visualization of the result should be shown
 
-My focus was on adherence to Angular best practices. For instance, services are used to model data instead of direct manipulation of $scope, and factories amount to interfaces for interaction with Firebase or RoR.
+Being an MVP, my focus was on adherence to Angular best practices rather than feature cover. For instance, services are used to model data instead of direct manipulation of $scope, and factories amount to interfaces for interaction with Firebase or RoR.
