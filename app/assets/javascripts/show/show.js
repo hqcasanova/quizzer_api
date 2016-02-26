@@ -42,6 +42,7 @@
         quiz.statusText = 'Closed';
         ClassroomService.counters.bindTo($scope);
         answer.bindTo($scope);
+        quiz.setClassFull = setClassFull;
         quiz.nextQuestion = nextQuestion;
         quiz.openQuestion = openQuestion;
         quiz.submitAnswer = submitAnswer;
@@ -86,6 +87,10 @@
         function resetAnswers() {
             answer.set('right', 0);
             answer.set('wrong', 0);
+        }
+
+        function setClassFull() {
+            ClassroomService.setFull();
         }
         
         function update() {

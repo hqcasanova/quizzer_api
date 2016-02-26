@@ -12,6 +12,7 @@
         this.counters = new RTCountersFactory('classroom');
         this.inc = studentInc;
         this.dec = studentDec;
+        this.setFull = setFull;
         this.setQuiz = setQuiz;
         this.exitQuiz = exitQuiz;
         this.isRightQuiz = isRightQuiz;
@@ -39,6 +40,10 @@
         function exitQuiz() {
             this.counters.set('quizId', 0);
             this.counters.set('turnout', 0);
+        }
+
+        function setFull() {
+            this.counters.set('size', this.counters.get('turnout'));
         }
 
         function isRightQuiz(quizId) {

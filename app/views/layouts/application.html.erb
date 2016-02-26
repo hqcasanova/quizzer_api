@@ -12,11 +12,10 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <ul class="menu">
-    <li><a ng-if="checkedin" href="#/quizzes">List</a></li>
-    <li><a ng-if="authenticated" href="#/quizzes/new">New</a></li>
-    <li><a ng-if="checkedin" ng-click="quit()" href="#/checkin">Quit</a></li>
+    <li ng-if="checkedin"><a href="#/quizzes">List</a></li>
+    <li ng-if="authenticated"><a href="#/quizzes/new">New</a></li>
+    <li ng-if="checkedin"><a ng-click="quit()" href="#/checkin">Quit</a></li>
   </ul>
-
   <section ng-view></section>
 </body>
 </html>

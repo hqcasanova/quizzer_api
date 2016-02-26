@@ -33,7 +33,7 @@
         var checkin = this;
 
         if (!$rootScope.checkedin) {
-             $cookieStore.remove('authenticated');
+            $cookieStore.remove('authenticated');
         }
 
         if ($cookieStore.get('email')) {

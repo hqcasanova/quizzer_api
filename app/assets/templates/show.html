@@ -1,11 +1,11 @@
 <h1>{{quiz.selected}}</h1>
 <ul>
-  <li ng-repeat="question in quiz.items">
+  <li ng-repeat="(questionNo, question) in quiz.items">
     <form name="questionForm" ng-submit="quiz.submitAnswer(question, quiz.answer)" novalidate>
       <fieldset>
-        <legend>{{question.title}}</legend>
+        <legend>{{questionNo + 1}}. {{question.title}}</legend>
         <label ng-repeat="option in question.options">
-          <input  ng-model="quiz.answer" type="radio" name="options" value="{{option[0]}}"
+          <input  ng-model="quiz.answer" type="radio" name="{{questionNo}}" value="{{option[0]}}"
                   ng-checked="quiz.isAnswer(question, option[0])" 
                   ng-disabled="authenticated" required />{{option[1]}}<br/>
         </label>
@@ -18,9 +18,16 @@
     </form>
   </li>
 </ul>
-<p ng-hide="quiz.isFull()">{{classroom.turnout}} students out of {{classroom.size}}</p>
-<div ng-show="authenticated && quiz.isFull()">
-    <a href ng-hide="quiz.isOpen()" ng-click="quiz.openQuestion()">{{quiz.statusText}}</a>
-    <a href ng-hide="quiz.end" ng-click="quiz.nextQuestion()">Next</a>
-    <p ng-show="quiz.statusText === 'Opened'">{{answer.right}} right answers and {{answer.wrong}} wrong answers</p>
-</div>
+<aside ng-hide="quiz.isFull()">
+  <ng-pluralize count="classroom.turnout"
+                when="{'0': 'No students are on the quiz',
+                      '1': 'Only 1 student is on the quiz',
+                      'other': '{{classroom.turnout}} students out of {{classroom.size}}'}">
+  </ng-pluralize> 
+  <a href ng-if="authenticated" ng-click="quiz.setClassFull()">Full class</a>
+</aside>
+<ul ng-show="authenticated && quiz.isFull()">
+  <li>Status: <a href ng-hide="quiz.isOpen()" ng-click="quiz.openQuestion()">{{quiz.statusText}}</a></li>
+  <li><a href ng-hide="quiz.end" ng-click="quiz.nextQuestion()">Next</a></li>
+  <li ng-show="quiz.statusText === 'Opened'">{{answer.right}} right answers and {{answer.wrong}} wrong answers</li>
+</ul>
