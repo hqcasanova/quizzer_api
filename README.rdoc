@@ -1,8 +1,6 @@
-== Quizzer
+## Quizzer
 
 Final MVP for Bitmaker's course consisting of a real-time classroom quiz application based on Angular.js (v1.2.25), Ruby on Rails and Firebase. 
-
-It can be tested at https://rt-quizzer.herokuapp.com. The best way to try it out is by using two browsers on different machines or of different vendors on the same machine. This is due to the use of cookies. Then log in on each with different user roles: as "student" on one browser and "teacher" on the other.
 
 The inital list of features is as follows:
 
